@@ -1,0 +1,187 @@
+1. Draw and label a single neuron and then calculate the output of neuron using the following information:
+X =
+[4,2,−1,2]
+ 
+W =
+[1,0,2,1]
+ 
+b = [-4]
+sigmoid activation function
+
+ANS1: Here's the diagram of a single neuron, as requested. Now, let's calculate the output of the neuron using the provided values.
+
+The formula for a neuron's output is:
+
+Z = (W_1 X_1 + W_2 X_2 + W_3 X_3 + W_4 X_4) + b
+
+
+where:
+( X = [4, 2, -1, 2] \)
+( W = [1, 0, 2, 1] \)
+( b = -4 \)
+
+### Step-by-Step Calculation:
+1. Compute the weighted sum:
+
+Z = (1 \times 4) + (0 \times 2) + (2 \times -1) + (1 \times 2) - 4
+
+Z = 4 + 0 - 2 + 2 - 4
+
+Z = 0
+
+2. Apply the sigmoid activation function:
+
+sigma(Z) = \frac{1}{1 + e^{-Z}} = \frac{1}{1 + e^{0}} = \frac{1}{2}
+
+
+The output of the neuron is **0.5**.
+
+
+que2:Draw and label the network and then calculate the output of the network using the following information:
+X =
+(2−4−1132)
+ 
+𝑊[1]
+  =
+(132112)
+ 
+𝑏[1]=[4,2]
+ 
+𝑊[2]=[1,3]
+ 
+𝑏[2]=[1]
+ 
+ReLU activation function
+
+ans2 : Here's the diagram of the two-layer neural network. Now, let's calculate the output step by step.
+
+Given:
+- Input \( X = [2, -4, -1] \)
+- First layer weights \( W[1] = \begin{bmatrix} 1 & 3 & 2 \\ 1 & 1 & 2 \end{bmatrix} \)
+- First layer bias \( b[1] = [4, 2] \)
+- Second layer weights \( W[2] = [1, 3] \)
+- Second layer bias \( b[2] = [1] \)
+- ReLU activation function
+
+### Step 1: Compute the hidden layer activations
+
+Hidden layer pre-activation \( Z_1 \) is given by:
+
+Z_1 = W[1] \cdot X + b[1]
+
+Z_1 = \begin{bmatrix} 1 & 3 & 2 \\ 1 & 1 & 2 \end{bmatrix} \cdot \begin{bmatrix} 2 \\ -4 \\ -1 \end{bmatrix} + \begin{bmatrix} 4 \\ 2 \end{bmatrix}
+
+For the first hidden neuron:
+
+Z_{11} = (1 \times 2) + (3 \times -4) + (2 \times -1) + 4 = 2 - 12 - 2 + 4 = -8
+
+For the second hidden neuron:
+
+Z_{12} = (1 \times 2) + (1 \times -4) + (2 \times -1) + 2 = 2 - 4 - 2 + 2 = -2
+
+Now apply the ReLU activation function, which is defined as \( \text{ReLU}(x) = \max(0, x) \):
+
+A_1 = \text{ReLU}(Z_1) = \begin{bmatrix} \text{ReLU}(-8) \\ \text{ReLU}(-2) \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \end{bmatrix}
+
+### Step 2: Compute the output layer activation
+
+Now, the output layer pre-activation \( Z_2 \) is given by:
+
+
+que3: How many trainable parameters does the following network have:
+Input data has 10 features
+Layer 1 has 5 neurons
+Layer 2 has 3 neurons
+Output layer has 1 neuron
+
+ans3: 10*5 + 5 + (5*3 + 3) + (3*1 + 1)
+77
+The network has **77 trainable parameters**
+
+
+que3a: How many trainable parameters does the following network have:
+
+Input data has  𝑛
+  features
+Layer 1 has  𝑚
+  neurons
+Layer 2 has  𝑠
+  neurons
+Output layer has  𝑡
+  neuron
+
+ans3a: Total Trainable Parameters:
+𝑛 × 𝑚 + 𝑚 + 𝑚 × 𝑠 + 𝑠 + 𝑠 × 𝑡 + 𝑡
+n×m+m+m×s+s+s×t+t
+This formula gives the total number of trainable parameters for the network.
+
+que4: Explain the role of the optimizer, loss, and metrics that we specify during the compile step.
+ans4: During the compile step of a neural network, the **optimizer** determines how the model learns by adjusting its weights to minimize errors, while the **loss function** quantifies how far off the predictions are from the actual results. Together, they guide the learning process, with the optimizer making updates based on the loss. **Metrics** are used to evaluate the model's performance, providing insights into how well it's doing during training and testing beyond just the loss value.
+
+
+que5: Explain the three ways of carrying out gradient descent.
+ans5: Gradient descent can be performed in three main ways. **Batch Gradient Descent** computes updates using the entire dataset, making it accurate but slow. **Stochastic Gradient Descent (SGD)** updates the model with one data point at a time, leading to faster but noisier updates, while **Mini-Batch Gradient Descent** uses small batches of data, offering a balance between speed and stability.
+
+que6: What does the term epoch mean?
+ans6: An **epoch** in the context of machine learning and neural networks refers to one complete pass through the entire training dataset during the training process. In each epoch, the model learns from all the training examples, updating its weights based on the loss calculated from the predictions. Multiple epochs are typically run to allow the model to refine its learning, as it can adjust its parameters incrementally with each pass through the data.
+
+que7: What does the term batch_size mean?
+ans7: **Batch size** refers to the number of training samples used in one iteration of the training process when training a neural network. Instead of feeding the entire dataset to the model at once (which is called Batch Gradient Descent), or just one sample at a time (which is called Stochastic Gradient Descent), mini-batch gradient descent uses a small subset of the data. 
+
+Choosing the right batch size can impact training speed and model performance: smaller batches can lead to noisier updates but faster training, while larger batches provide more stable estimates of the gradient but may require more memory and computation time.
+
+
+
+que11:Explain the role of the learning_rate.
+ans11: The **learning rate** determines how big of a step the model takes when updating its weights during training. A well-chosen learning rate helps the model learn quickly and effectively, while a poor choice can slow down training or cause it to miss the optimal solution.
+
+que13: What is the difference between the network used for training and the network used for testing?
+ans13: The **training network** learns from labeled data by adjusting its weights to minimize errors, while the **testing network** evaluates how well the trained model performs on unseen data without making any adjustments. Essentially, training is about teaching the model, and testing is about checking how well it learned.
+
+que14: What two pieces of information does the derivative tell us with respect to adjusting the parameters of the network?
+ans14: The derivative provides two key pieces of information when adjusting the parameters of a neural network:
+
+1. **Direction of Change:** The sign of the derivative indicates whether to increase or decrease a parameter to minimize the loss. A positive derivative suggests that increasing the parameter will increase the loss, while a negative derivative indicates that increasing the parameter will decrease the loss.
+
+2. **Magnitude of Change:** The absolute value of the derivative indicates how much to adjust the parameter. A larger derivative means a larger change is needed for the parameter, while a smaller derivative suggests a smaller adjustment. This helps in determining the step size during optimization, ensuring that the model learns effectively.
+
+que15: Describe a straightforward method that could be used to update the weights in a neural network.
+ans15: A straightforward way to update weights in a neural network is through **Stochastic Gradient Descent (SGD)**, where you calculate the loss and its gradients after each prediction. You then adjust the weights by a small amount based on these gradients, repeating this process until the model learns effectively.
+
+que16: When we say a network learns, what does that mean? How is this connected to training a network?
+ans16: When we say a network learns, it means that the model is adjusting its weights and biases based on the data it processes to improve its ability to make accurate predictions. This learning occurs during the **training** phase, where the network is exposed to labeled data, calculates the errors of its predictions, and uses techniques like backpropagation to update its parameters in a way that minimizes those errors over time. Essentially, learning is the process of refining the model's internal representation of the data to generalize well on unseen examples.
+
+que17: If a network is fully connected, what does that mean?
+ans17:A **fully connected network** means that every neuron in one layer is connected to all the neurons in the next layer, allowing for rich interactions and information flow. This structure helps the network learn complex patterns by combining inputs from every neuron in the previous layer.
+
+que18: What is the difference between parameters and hyperparameters?
+ans18: **Parameters** are the values that a model learns from the training data, like weights and biases, while **hyperparameters** are the settings you choose before training, such as the learning rate and batch size. Essentially, parameters change during training, but hyperparameters guide the training process itself.
+
+que19: We have a model y=wx intialized with weight 3. If you have derivate as, dl/dw = -12 and learning rate = 0.05. What would be the updated weight based on given learning rate &derivative. Formula: w_new = w - lr* dl/dw Given: Inital (w) = 3 Learning Rate (lr) = 0.05 Gradient (dl/dw) = -12 Plug these values into the formula: w_new = 3 - 0.05 * (-12) w_new = 3 + 0.6 w_new = 3.6
+ans19: The updated weight based on the given learning rate and derivative is **3.6**.
+
+que20:
+Explain vanishing and exploding gradient problem.
+
+The **vanishing gradient problem** happens when gradients become too small, preventing earlier layers in a deep network from learning effectively. In contrast, the **exploding gradient problem** occurs when gradients grow too large, causing weight updates to become unstable and making the training process erratic.
+
+que23: What is Forward Pass & Backpropagation?
+ans23: The **forward pass** is when input data flows through the network to generate predictions and calculate the error. In contrast, **backpropagation** adjusts the weights based on this error, allowing the model to learn and improve over time.
+
+que24: Write Keras code to create a fully-connected network that has MNIST-like images that are 64x64 pixels, the network has 3 layers with [ 64, 64, 256] neurons, respectively, and activations = sigmoid. The output layer has 3 neuron(s) and a softmax activation.
+ans24: Here's a simple Keras code snippet to create a fully-connected network for 64x64 MNIST-like images:
+
+```python
+from keras.models import Sequential
+from keras.layers import Flatten, Dense
+
+model = Sequential([
+    Flatten(input_shape=(64, 64)),  # Flatten the 64x64 images
+    Dense(64, activation='sigmoid'),
+    Dense(64, activation='sigmoid'),
+    Dense(256, activation='sigmoid'),
+    Dense(3, activation='softmax')  # Output layer with 3 neurons
+])
+```
+
+This code sets up a fully-connected network that processes 64x64 pixel images, with three hidden layers using sigmoid activations and an output layer with softmax for multi-class classification.
