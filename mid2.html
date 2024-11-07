@@ -1,0 +1,173 @@
+Que1: Using Keras's Functional API, write the code for a convolutional neural network corresponding to the following information: the network uses the 'Conv/Con/Max Pooling' block pattern, contains 3 blocks, the number of
+filters follows a [ 32, 256, 512) pattern from block to block, and the classifier portion has 1 layer(s) with activation(s) = ReLU, and [128] neurons, respectively. The output layer has 3 neuron(s) and should have an activation
+suitable to a classification problem. All convolutional layers have activation - ReLU, filter size = (3, 3) and padding - valid, while the pooling layers have a window of size - (3, 3); both types of layers have typical values for
+the stride. The input data has shape = (32, 32, 1). All hyperparameters noted in the question should be included explicitly in your code. Your code only needs to create the model, that is, no imports, no data, no compile.
+no fit.
+
+Answer1:
+
+from tensorflow.keras.layers import Input, Conv2D, MaxPooling2D, Dense, Flatten
+from tensorflow.keras.models import Model
+
+# Input layer
+input_layer = Input(shape=(32, 32, 1))
+
+# Block 1
+x = Conv2D(filters=32, kernel_size=(3, 3), activation='relu', padding='valid', strides=(1, 1))(input_layer)
+x = MaxPooling2D(pool_size=(3, 3), strides=(2, 2))(x)
+
+# Block 2
+x = Conv2D(filters=256, kernel_size=(3, 3), activation='relu', padding='valid', strides=(1, 1))(x)
+x = MaxPooling2D(pool_size=(3, 3), strides=(2, 2))(x)
+
+# Block 3
+x = Conv2D(filters=512, kernel_size=(3, 3), activation='relu', padding='valid', strides=(1, 1))(x)
+x = MaxPooling2D(pool_size=(3, 3), strides=(2, 2))(x)
+
+# Flatten and classifier portion
+x = Flatten()(x)
+x = Dense(128, activation='relu')(x)
+
+# Output layer for a classification problem with 3 classes
+output_layer = Dense(3, activation='softmax')(x)
+
+# Create the model
+model = Model(inputs=input_layer, outputs=output_layer)
+
+
+Que2: For the input array x = p.array([[ 6, 2, 9, 5, 2, 7), [10, 0, 1, 6, 10, 8], [ 2, 9, 0, 0, 10, 8), [ 3, 2, 2, 7, 0, 3], [10, 9, 4, 1, 6, 6], [10, 7, 8, 7, 4, 10]]), filter f = p.array/(-1, -1, 11, [ 3, -2, 01. (-1, 0, -31), padding = valid, and strides = 1,
+what is the convolutional output for the [0, 0] element of the output array?
+
+﻿﻿6.0
+﻿﻿29.0
+0-41.0
+
+Ans2: 29.0
+
+Que3: You have imported a pretrained model as ResNet50. This pretrained model only contains the convolution portion, and its final layer is a average pooling layer. Using Keras's functional API, create a model that uses this pretrained model and has a classifier with one hidden layer with 64 neurons with activation sigmoid and an output layer with 10 neurons and an activation suitable for classification. There should be a layer that assures that the pixel values processed by the network have values in the range 0 to 1. The network should be able to process images with dimensions (32, 32, 3). (No preprocessing layer is required.)
+
+Ans3: 
+from tensorflow.keras.layers import Input, Rescaling, Dense, Flatten
+from tensorflow.keras.models import Model
+from tensorflow.keras.applications import ResNet50
+
+# Input layer
+input_layer = Input(shape=(32, 32, 3))
+
+# Rescaling layer to ensure pixel values are in the range [0, 1]
+x = Rescaling(scale=1.0 / 255)(input_layer)
+
+# Load the pretrained ResNet50 model (only the convolution portion, excluding the top classifier layers)
+# We set include_top=False to exclude the fully connected layers
+# Set pooling to 'avg' to add a global average pooling layer at the end of the ResNet model
+pretrained_model = ResNet50(include_top=False, pooling='avg', input_shape=(32, 32, 3))
+x = pretrained_model(x)
+
+# Flattening layer is not needed as pooling='avg' outputs a 1D tensor
+
+# Classifier portion
+x = Dense(64, activation='sigmoid')(x)
+output_layer = Dense(10, activation='softmax')(x)
+
+# Create the final model
+model = Model(inputs=input_layer, outputs=output_layer)
+
+
+Que4: If your model starts training but can't beat a baseline, the problem is most likely:
+﻿﻿the learning rate is not appropriate that an incorrect type of pooling layer was used
+﻿﻿the data, or the model architecture
+
+Ans4: The data, or the model architecture
+
+Que5: Which method will not effect the height and width of your data:
+﻿﻿a Conv2D layer with strides set to a value greater than 1
+﻿﻿using a customized activation function in your convolutional layer
+O using a typical pooling layer
+
+Ans5: Using a customized activation function in your convolutional layer
+
+que6: If your model doesn't start training the most likely problem is:
+﻿﻿the learning rate is not appropriate
+﻿﻿that an incorrect weight initialization was used
+O the optimizer was not chosen properly
+
+Ans6: An incorrect weight initialization was used
+
+
+Que7: Data augmentation means you:
+© modify your existing data to help expose the model to more aspects of the data so it can generalize better
+﻿﻿use a dataset that is different from your original dataset so your model can learn better patterns
+﻿﻿add new images to your dataset to reduce overfitting
+
+Ans7: Modify your existing data to help expose the model to more aspects of the data so it can generalize better.
+
+Que8:What two properties do convolutional neural networks have that make them much more useful for images than fully-connected networks?
+• parameter sharing/global pattern matching
+O parameter sharing/local pattern matthing
+• parameter optimization/local pattern matching
+
+Ans8: Parameter sharing / local pattern matching
+
+Que9: For the input array x = np.array([[ 9., 8., 2., 14.], [ 4., 7., 2., 6.], [20., 2., 5., 27.J, [4., 24., 10., 10.]]), pool size - (2, 2), and strides = 2, what is the output of applying Average Pooling;
+﻿﻿[[ 4.5, 4., 7. J. [10., 3.5, 13.5), [12., 12., 13.5)]
+﻿﻿[ 7., 6. ). [12.5, 13. ]J|
+﻿﻿[3., 2.75]. [2.75, 1.75])
+
+Ans9: [ 
+7
+12.5
+6
+13
+​
+ ]
+
+Que10: How many trainable parameters in total do the following layers have: a Conv2D(32, (5, 5), activation='sigmoid) layer followed by a Conv2D(64, (5, 5), activation= sigmoid) layer, where the input to the first Conv2d0 layer has dimesions (90, 90, 16)?
+﻿﻿64096
+﻿﻿64000
+О 129600
+
+Ans10: 64096
+
+Que11: You have imported the convolution portion of a pretrained model and its layers are stored as model=[Layer('Conv2D_block_1'), Layer ('Conv2D_block_1'), Layer(MaxPooling_block_1'), Layer('Conv2D _block _2).
+Layer(ConvD _block_2'), Layer("MaxPooling_block_2"), Layer('Conv2D_block_3'), Layer('Conv2D_block_3'), Layer(MaxPooling_block _3'), Layer('Conv2D _block_4"), Layer('Conv2D_block 4", Layer(MaxPooling block_4),
+Layer(Conv2D_block_5'), Layer('Conv2D_block_5'), Layer(MaxPooling block_5'), Layer(Conv2D_block_6), Layer('Conv2D_block_6), Layer(MaxPooling_block _6')]. Write code that will make only the layers in the last block trainable. (See provided class definition for Layer.)
+
+Ans11: # Assuming model is a list of layers as described
+class Layer:
+    def __init__(self, name):
+        self.name = name
+        self.trainable = True  # Default is trainable
+
+# Example model definition
+model = [
+    Layer('Conv2D_block_1'), Layer('Conv2D_block_1'), Layer('MaxPooling_block_1'),
+    Layer('Conv2D_block_2'), Layer('Conv2D_block_2'), Layer('MaxPooling_block_2'),
+    Layer('Conv2D_block_3'), Layer('Conv2D_block_3'), Layer('MaxPooling_block_3'),
+    Layer('Conv2D_block_4'), Layer('Conv2D_block_4'), Layer('MaxPooling_block_4'),
+    Layer('Conv2D_block_5'), Layer('Conv2D_block_5'), Layer('MaxPooling_block_5'),
+    Layer('Conv2D_block_6'), Layer('Conv2D_block_6'), Layer('MaxPooling_block_6')
+]
+
+# Determine the layers in the last block
+last_block_start_index = len(model) - 6  # Assuming each block has 3 layers (Conv2D, Conv2D, MaxPooling)
+last_block_layers = model[last_block_start_index:]
+
+# Set all layers in the model to non-trainable
+for layer in model:
+    layer.trainable = False
+
+# Set only the layers in the last block to trainable
+for layer in last_block_layers:
+    layer.trainable = True
+
+# Output the trainable status of each layer for verification
+for layer in model:
+    print(f'Layer: {layer.name}, Trainable: {layer.trainable}')
+
+
+Explanation:
+Layer Class: A simple class to represent layers with a name and a trainable attribute.
+Model Definition: A list of layers representing the structure of the pretrained model.
+Last Block Identification: The code identifies the last block by slicing the model list.
+Trainability Setting: It first sets all layers to trainable = False, and then sets the layers in the last block to trainable = True.
+Verification: The code prints the trainable status of each layer for confirmation.
