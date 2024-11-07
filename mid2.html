@@ -171,3 +171,150 @@ Model Definition: A list of layers representing the structure of the pretrained 
 Last Block Identification: The code identifies the last block by slicing the model list.
 Trainability Setting: It first sets all layers to trainable = False, and then sets the layers in the last block to trainable = True.
 Verification: The code prints the trainable status of each layer for confirmation.
+---------------------------------------------------------------------------------------------------------------------------------------
+que12: How many trainable parameters in total do the following layers have: a Conv2D(128, (5, 5), activation 'tanh') layer followed by a Conv2D(32, (5, 5), activation- tanh) layer, where the input to the first Com/2d0 layer has
+dimesions (224, 224, 16)2
+﻿﻿802816
+﻿﻿153600|
+﻿﻿153760|
+
+Ans12: 153760
+
+que13: What do we mean by the **receptive field** of a filter in a convolutional neural network?
+
+Ans13:
+##In a CNN, the receptive field of a filter refers to the specific region of the input image that influences a particular neuron in the output.
+
+Initially, each filter covers a small, localized part of the input, capturing fine details like edges. As the network goes deeper, the effective receptive field increases, allowing neurons in deeper layers to "see" larger portions of the image and detect more complex patterns. The receptive field size depends on the filter size, strides, and pooling across layers and is key to capturing both local and global features in the data.
+
+What 2 properties do convolutional neural networks have that make them much more useful for images than fully-connected networks?
+
+Ans: ##Convolutional Neural Networks (CNNs) are particularly well-suited for image data due to these two key properties:
+
+##1. Spatial Hierarchy and Local Connectivity ##2. Parameter Sharing
+
+Spatial Hierarchy and Local Connectivity: CNNs use convolutional layers where each filter (or kernel) connects to a local region of the input image, capturing spatial hierarchies. This local connectivity enables the model to detect edges, textures, and patterns in small regions and then combine them at deeper layers to recognize more complex structures like shapes or objects.
+
+Parameter Sharing: In CNNs, filters are shared across the image, meaning the same filter scans the entire input image to identify the same feature (like an edge or texture) across different locations. This significantly reduces the number of parameters compared to fully connected networks, making CNNs more efficient and less prone to overfitting on image data.
+
+Explain/use padding.
+
+Ans: ##Padding in CNNs is a technique where additional pixels are added around the edges of an input image before applying a convolutional layer.
+
+Padding helps control the spatial dimensions of the output feature maps and allows the network to preserve more information at the edges of the image.
+
+Why Padding is Important Maintain Spatial Dimensions: Without padding, the spatial dimensions of the image reduce with each convolution.
+
+##Types of Padding:
+
+Valid Padding (No Padding): No extra pixels are added, so the output shrinks with each convolution. This can be useful when reducing spatial dimensions is desired.
+
+Same Padding: Pixels are added to the input’s edges to ensure that the output dimensions match the input dimensions (if the stride is 1). This is commonly used to maintain image size through multiple layers.
+
+Explain/use strides.
+
+Ans: ##Gives info about how filters are moved across the input matrix.
+
+Impact of Strides Output Size: Larger strides lead to smaller output feature maps, as fewer positions are covered during convolution. This can help reduce computational load and the number of parameters.
+
+Detail and Resolution: Higher stride values reduce the resolution of the feature map, which might cause some finer details to be lost. Lower strides capture finer details but increase computation and output size.
+
+What is the purpose of a pooling layer?
+
+Ans: To reduce the height and width sequentially. Pooling is a form of downsampling.
+
+What is the difference between a parameter and a hyperparameter?
+
+Ans: Parameters are learned from the data during training, while hyperparameters are set before training and control the learning process.
+
+Parameters directly affect the predictions, as they are part of the model itself, whereas hyperparameters impact the model's training behavior and effectiveness but aren’t part of the model’s structure.
+
+What are training, validation, and test datasets used for?
+
+Ans: The training dataset is used to train the model, allowing it to learn patterns and relationships within the data.
+
+The validation dataset is used for tuning the model and adjusting hyperparameters.
+
+The test dataset is used solely to evaluate the final performance of the model after training and tuning are complete.
+
+What is a baseline and how is it used?
+
+Ans: A baseline in machine learning is a simple model or metric that serves as a reference point for evaluating the performance of more complex models. It provides a minimum standard of performance that a new model should at least meet or exceed.
+
+What are the first 2 goals we should have when creating a deep learning model?
+
+Ans:
+
+Create an overfit model.
+Generalize the model to reduce loss.
+What are some ways to deal with overfitting?
+
+Ans:
+
+Simplifying the Model
+Reducing Epochs
+Batch Normalization
+Regularization Techniques
+Increasing Training Data
+What are some common problems when training a model and how can they be overcome?
+
+Ans:
+
+Overfitting Problem: The model performs well on the training data but poorly on validation/test data. Solutions: Use regularization techniques (L1, L2). Implement dropout in neural networks. Simplify the model architecture. Increase training data or apply data augmentation.
+
+Underfitting Problem: The model performs poorly on both training and validation data, failing to capture the underlying patterns. Solutions: Increase model complexity (more layers or neurons). Reduce regularization if it’s too strong. Ensure sufficient training time (increase epochs). Improve feature selection or engineering.
+
+Poor Generalization Problem: The model does not perform well on unseen data. Solutions: Use k-fold cross-validation to assess model robustness. Ensure that the training data is representative of the real-world scenario. Apply techniques like ensemble learning.
+
+Long Training Times Problem: Training the model takes an excessive amount of time, making experimentation difficult. Solutions: Use hardware acceleration (GPUs/TPUs). Optimize model architecture for efficiency. Utilize batch processing to speed up computation. Reduce the complexity of the model.
+
+Imbalanced Dataset Problem: One class is overrepresented compared to others, leading to biased predictions. Solutions: Use techniques like oversampling, undersampling, or SMOTE (Synthetic Minority Over-sampling Technique). Implement cost-sensitive learning by assigning higher costs to misclassifying the minority class. Use ensemble methods that are robust to class imbalance.
+
+Transfer learning/Fine-tuning
+
+what is it? why do we do it?
+import pre-trained model
+build a new model using all or part of pre-trained model
+freeze parameters
+Ans:
+
+##What is it? ##Transfer Learning is a machine learning technique where a pre-trained model, developed on a large dataset, is adapted for a specific task. Instead of training a model from scratch, transfer learning leverages the learned features from the pre-trained model, which often results in better performance, especially when the target dataset is small.
+
+##Fine-Tuning refers to the process of making small adjustments to the pre-trained model on the new dataset to improve performance. This often involves retraining some layers of the model while keeping others fixed.
+
+##Why do we do it? ##Reduced Training Time, Improved Performance, Limited Data.
+
+Reduced Training Time: Fine-tuning a pre-trained model can significantly reduce the time and computational resources needed for training.
+
+Improved Performance: Pre-trained models often have learned useful representations that can be applied to similar tasks, resulting in higher accuracy.
+
+Limited Data: Transfer learning is particularly useful when the target task has a limited amount of labeled data, as the model can leverage the knowledge gained from the larger dataset.
+
+##Steps in Transfer Learning and Fine-Tuning: ##Import Pre-trained Model, Build a New Model Using All or Part of the Pre-trained Model, Freeze Parameters.
+
+Import Pre-trained Model: You can use popular pre-trained models from libraries like TensorFlow (Keras) or PyTorch.
+
+Build a New Model Using All or Part of the Pre-trained Model: You can either use the entire model or take specific layers from the pre-trained model to build a new architecture.
+
+Freeze Parameters: Freezing parameters involves setting some layers of the pre-trained model to non-trainable so that their weights do not get updated during training. This is typically done for the earlier layers, which capture general features.
+
+Data augmentation
+
+what is it? why do we do it?
+how to create a data augmentation layer
+Ans:
+
+What is it?
+##Data Augmentation is a technique used in machine learning, to artificially increase the size of a training dataset by creating modified versions of existing data points. This can include transformations such as rotations, translations, flips, zooms, and changes in brightness or contrast. The idea is to introduce variability in the training data without needing to collect additional data.
+
+Why do we do it?
+Improve Generalization, Increase Robustness, Utilize Limited Data
+Improve Generalization: By providing a more diverse set of training examples, data augmentation helps models learn to generalize better, reducing the risk of overfitting to the training data. Increase Robustness: Augmented data can make models more resilient to variations and noise in real-world data. Utilize Limited Data: In scenarios where collecting more data is expensive or impractical, data augmentation allows for better performance by effectively expanding the dataset.
+
+##How to Create a Data Augmentation Layer: ##In libraries like TensorFlow (Keras) and PyTorch, you can easily create a data augmentation layer.
+
+​
+headers = {
+    'Cache-Control': 'no-cache',  # Instructs the browser and server not to cache
+    'Pragma': 'no-cache'          # HTTP/1.0 compatibility; often used with Cache-Control
+}
